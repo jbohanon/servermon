@@ -61,11 +61,9 @@ func loginIpmi(s *Settings) error {
 		return errors.Errorf("login returned error %s", resp.Status)
 	}
 	for _, cookie := range resp.Cookies() {
-		log.Println(cookie.Name, cookie.Value)
 		if cookie.Name != "SID" || cookie.Value == "" {
 			continue
 		}
-		log.Println("assigning", cookie.Name, cookie.Value)
 		s.SidCookie = cookie.Value
 	}
 	return nil
