@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -20,6 +21,7 @@ func resetServer(s *Settings) error {
 		Name:  "SID",
 		Value: s.SidCookie,
 	})
+	log.Println(req.Cookies)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		err = errors.Wrap(err, "making http request to reset server over IPMI")
@@ -54,6 +56,7 @@ func loginIpmi(s *Settings) error {
 		return errors.Errorf("login returned error %s", resp.Status)
 	}
 	for _, cookie := range resp.Cookies() {
+		log.Println(cookie)
 		if cookie.Name != "SID" || cookie.Expires.Before(time.Now()) {
 			continue
 		}
