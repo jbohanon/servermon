@@ -26,7 +26,6 @@ func resetServer(s *Settings) error {
 		Name:  "SID",
 		Value: s.SidCookie,
 	})
-	log.Println(req.Cookies)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		err = errors.Wrap(err, "making http request to reset server over IPMI")
@@ -63,7 +62,7 @@ func loginIpmi(s *Settings) error {
 	}
 	for _, cookie := range resp.Cookies() {
 		log.Println(cookie.Name, cookie.Value)
-		if cookie.Name != "SID" || cookie.Expires.Before(time.Now()) {
+		if cookie.Name != "SID" || cookie.Value == "" {
 			continue
 		}
 		log.Println("assigning", cookie.Name, cookie.Value)
