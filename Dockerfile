@@ -6,7 +6,7 @@ COPY go.sum ./
 RUN go mod download all
 COPY *.go ./
 
-RUN CGO_ENABLED=0 go build -o servermon .
+RUN GOARCH=amd64 GOOS=linux CGO_ENABLED=0 go build -o servermon .
 
 FROM scratch
 COPY --from=builder /var/build/servermon /app/servermon

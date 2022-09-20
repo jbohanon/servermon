@@ -10,22 +10,22 @@ import (
 )
 
 func main() {
-	var s *Settings
-	err := envconfig.Process("", s)
+	var s Settings
+	err := envconfig.Process("", &s)
 	if err != nil {
 		err = errors.Wrap(err, "processing config")
 		log.Fatal(err)
 	}
 
 	for _ = range time.Tick(time.Second * 5) {
-		alive, err := serverIsAlive(s)
+		alive, err := serverIsAlive(&s)
 		if err != nil {
 			err = errors.Wrap(err, "checking server liveness")
 			log.Println("[ERROR]", err)
 			continue
 		}
 		if !alive {
-			err = resetServer(s)
+			err = resetServer(&s)
 			if err != nil {
 				err = errors.Wrap(err, "resetting server")
 				log.Println("[ERROR]", err)
