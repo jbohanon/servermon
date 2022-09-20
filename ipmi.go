@@ -12,7 +12,7 @@ import (
 
 func resetServer(s *Settings) error {
 	if err := loginIpmi(s); err != nil {
-		err = errors.Wrap("logging in to IPMI")
+		err = errors.Wrap(err, "logging in to IPMI")
 		return err
 	}
 	payload := bytes.NewBuffer([]byte(s.IpmiResetPayload))
