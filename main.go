@@ -22,7 +22,6 @@ func main() {
 		if err != nil {
 			err = errors.Wrap(err, "checking server liveness")
 			log.Println("[ERROR]", err)
-			continue
 		}
 		if !alive {
 			err = resetServer(&s)
