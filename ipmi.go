@@ -46,7 +46,7 @@ func resetServer(s *Settings) error {
 
 func loginIpmi(s *Settings) error {
 	log.Println("[INFO] logging in to IPMI")
-	payload := bytes.NewBuffer([]byte(fmt.Sprintf(s.IpmiLoginUrl, s.IpmiUser, s.IpmiPassword)))
+	payload := bytes.NewBuffer([]byte(fmt.Sprintf(s.IpmiLoginPayload, s.IpmiUser, s.IpmiPassword)))
 	req, err := http.NewRequest("POST", s.IpmiLoginUrl, payload)
 	if err != nil {
 		err = errors.Wrap(err, "creating request to login to IPMI")
